@@ -68,7 +68,7 @@ export default function StoryCard({ story,onRemoveFavourite,onRateStory }:{story
           <p className="text-yellow-500 text-sm mt-2">Marked as Favorite</p>
         )}
         {story.user_feedback && (
-          <p className="italic text-sm text-primary mt-2">"{story.user_feedback}"</p>
+          <p className="italic text-sm text-primary mt-2">&quot;{story.user_feedback}&quot;</p>
         )}
         {story.status === 'favorite' &&<button
         className=" top-4 right-4 bg-white p-1 rounded-full shadow-md"
