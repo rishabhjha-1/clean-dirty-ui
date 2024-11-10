@@ -9,9 +9,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className=" text-gray-800">
+      <body className="bg-gray-100 text-gray-800 dark:bg-custom-gradient">
         <main className="flex flex-col items-center w-full min-h-screen">
-          <header className="bg-blue-600 w-full p-4 text-white text-center font-bold text-2xl">
+          <header className="bg-blue-600 w-full p-4 dark:text-white text-center font-bold text-2xl">
             CleanDirty User Dashboard
           </header>
           {children}

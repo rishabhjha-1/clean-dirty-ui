@@ -6,18 +6,19 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode:'class',
+  darkMode: 'class',
   theme: {
-    theme: {
-      extend: {
-        colors: {
-          primary: "#121212", // dark theme color
-          secondary: "#f0f0f0", // light theme color
-          accent: "#d92550", // accent color inspired by CleanDirty
-        },
-        fontFamily: {
-          sans: ["Inter", "sans-serif"],
-        },
+    extend: {
+      backgroundImage: {
+        'custom-gradient': 'linear-gradient(to right, rgb(9, 16, 24), rgb(26, 20, 49))',
+      },
+      colors: {
+        primary: "#121212", // dark theme color
+        secondary: "#f0f0f0", // light theme color
+        accent: "#d92550", // accent color inspired by CleanDirty
+      },
+      fontFamily: {
+        sans: ["Inter", "sans-serif"],
       },
     },
   },
