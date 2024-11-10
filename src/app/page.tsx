@@ -51,7 +51,7 @@ export default function Home() {
 
   const toggleDark = () => {
     setDarkMode(!darkMode);
-    localStorage.setItem("theme", darkMode ? "light" : "dark");
+    localStorage.setItem("theme", darkMode ? "dark" : "light");
   };
 
   const getStatusStories = (status: string): Story[] =>
