@@ -1,16 +1,17 @@
-"use client";
-import { useEffect, useState } from "react";
+"use client"
+
+import { useState, useEffect } from "react";
 import { getMockData } from "../lib/mockData";
 import UserProfile from "./components/UserProfile";
 import StoryCard, { Story } from "./components/StoryCard";
 import { motion } from "framer-motion";
-
-
+import Notification from "./components/Notification"; // Import Notification component
+import MeteorBackground from "./components/Meteor";
 
 export interface User {
   name: string;
   avatarUrl: string;
-  [key: string]: string; 
+  [key: string]: string;
 }
 
 interface Data {
@@ -19,17 +20,17 @@ interface Data {
 }
 
 export default function Home() {
-  const [data, setData] = useState<Data>({ user: {
-    name: "",
-    avatarUrl: ""
-  }, stories: [] });
+  const [data, setData] = useState<Data>({ user: { name: "", avatarUrl: "" }, stories: [] });
   const [darkMode, setDarkMode] = useState<boolean>(true);
+  const [notificationCount, setNotificationCount] = useState<number>(0); // Notification count state
 
   useEffect(() => {
     const dataFromStorage = getMockData();
     setData(dataFromStorage);
     const theme = localStorage.getItem("theme");
-    setDarkMode(theme === "dark");
+    if (theme) {
+      setDarkMode(theme === "dark");
+    }
   }, []);
 
   useEffect(() => {
@@ -47,6 +48,7 @@ export default function Home() {
         : story
     );
     setData({ ...data, stories: updatedStories });
+    setNotificationCount(notificationCount + 1); // Increment notification count on change
   };
 
   const toggleDark = () => {
@@ -64,6 +66,7 @@ export default function Home() {
         story.id === storyId ? { ...story, status: "" } : story
       ),
     }));
+    setNotificationCount(notificationCount + 1); // Increment notification count on change
   };
 
   return (
@@ -73,16 +76,21 @@ export default function Home() {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center mb-6">
+        <MeteorBackground/>
         <UserProfile user={data.user} />
-        <button onClick={toggleDark}>
-          {darkMode ? (
-            <span className="text-yellow-500 text-2xl">🌞</span>
-          ) : (
-            <span className="text-blue-500 text-2xl">🌙</span>
-          )}
-        </button>
+        <div className="flex items-center space-x-4">
+          <Notification count={notificationCount} /> {/* Display notifications */}
+          <button onClick={toggleDark}>
+            {darkMode ? (
+              <span className="text-yellow-500 text-2xl">🌞</span>
+            ) : (
+              <span className="text-blue-500 text-2xl">🌙</span>
+            )}
+          </button>
+        </div>
       </div>
+
       <div className="space-y-8 mt-6">
         <StorySection
           title="Completed Stories"
@@ -127,7 +135,7 @@ const StorySection = ({
   >
     <h2 className="text-xl font-bold mb-4 dark:text-white">{title}</h2>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {stories.map((story:Story) => (
+      {stories.map((story: Story) => (
         <motion.div
           key={story.id}
           initial={{ opacity: 0, scale: 0.8 }}
