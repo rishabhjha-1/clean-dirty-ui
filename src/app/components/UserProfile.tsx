@@ -1,5 +1,7 @@
+import { User } from "../page";
+
 // components/UserProfile.js
-export default function UserProfile({ user }:{user:any}) {
+export default function UserProfile({ user }:{user:User}) {
     return (
       <div className="flex items-center space-x-4 p-4 ">
         <img src={user?.profile_picture} alt={user?.name} className="w-16 h-16 rounded-full" />

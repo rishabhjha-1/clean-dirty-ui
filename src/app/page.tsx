@@ -2,35 +2,34 @@
 import { useEffect, useState } from "react";
 import { getMockData } from "../lib/mockData";
 import UserProfile from "./components/UserProfile";
-import StoryCard from "./components/StoryCard";
+import StoryCard, { Story } from "./components/StoryCard";
 import { motion } from "framer-motion";
 
-// Types for story data and props
-interface Story {
-  id: string;
-  status: string;
-  rating: number;
-  user_feedback: string;
+
+
+export interface User {
+  name: string;
+  avatarUrl: string;
+  [key: string]: string; 
 }
 
 interface Data {
-  user: Record<string, any>;
+  user: User;
   stories: Story[];
 }
 
 export default function Home() {
-  const [data, setData] = useState<Data>({ user: {}, stories: [] });
+  const [data, setData] = useState<Data>({ user: {
+    name: "",
+    avatarUrl: ""
+  }, stories: [] });
   const [darkMode, setDarkMode] = useState<boolean>(true);
 
   useEffect(() => {
     const dataFromStorage = getMockData();
     setData(dataFromStorage);
-    let theme = localStorage.getItem("theme");
-    if (theme === "dark") {
-      setDarkMode(true);
-    } else {
-      setDarkMode(false);
-    }
+    const theme = localStorage.getItem("theme");
+    setDarkMode(theme === "dark");
   }, []);
 
   useEffect(() => {
@@ -52,12 +51,11 @@ export default function Home() {
 
   const toggleDark = () => {
     setDarkMode(!darkMode);
-    localStorage.setItem("theme", !darkMode ? "dark" : "light");
+    localStorage.setItem("theme", darkMode ? "light" : "dark");
   };
 
-  const { user, stories } = data;
-  const getStatusStories = (status: string) =>
-    stories.filter((story) => story.status === status);
+  const getStatusStories = (status: string): Story[] =>
+    data.stories.filter((story) => story.status === status);
 
   const handleRemoveFavorite = (storyId: string) => {
     setData((prevData) => ({
@@ -76,7 +74,7 @@ export default function Home() {
       transition={{ duration: 1 }}
     >
       <div className="flex justify-between">
-        <UserProfile user={user} />
+        <UserProfile user={data.user} />
         <button onClick={toggleDark}>
           {darkMode ? (
             <span className="text-yellow-500 text-2xl">🌞</span>
@@ -119,7 +117,7 @@ interface StorySectionProps {
 const StorySection = ({
   title,
   stories,
-  onRemoveFavourite,
+  onRemoveFavourite = () => {},
   handleRateStory,
 }: StorySectionProps) => (
   <motion.section
@@ -129,7 +127,7 @@ const StorySection = ({
   >
     <h2 className="text-xl font-bold mb-4 dark:text-white">{title}</h2>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {stories.map((story) => (
+      {stories.map((story:Story) => (
         <motion.div
           key={story.id}
           initial={{ opacity: 0, scale: 0.8 }}

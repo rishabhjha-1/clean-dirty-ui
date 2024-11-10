@@ -4,16 +4,17 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { getMockData } from "@/lib/mockData";
 import { motion } from "framer-motion";
+import { Story } from "@/app/components/StoryCard";
 
 const StoryDetailPage = () => {
   const { id } = useParams();
-  const [story, setStory] = useState<any>(null);
+  const [story, setStory] = useState<Story>();
   const router=useRouter()
 
   useEffect(() => {
     if (id) {
       const dataFromStorage = getMockData();
-      const storyData = dataFromStorage.stories.find((story: any) => story.id == id);
+      const storyData = dataFromStorage.stories.find((story: Story) => story.id == id);
       setStory(storyData);
     }
   }, [id]);
