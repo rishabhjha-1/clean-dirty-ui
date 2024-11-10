@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 
 const Notification = ({ message }: { message: string }) => {
   return (
