@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import LazyLoad from 'react-lazyload';
 
 export interface Story {
 //   stories: any;
@@ -49,7 +50,10 @@ export default function StoryCard({ story, onRemoveFavourite, onRateStory }: Sto
 
   return (
     <div onClick={handleNavigate} className="bg-white shadow-lg rounded-lg p-4 mb-4">
-      <img src={story.image} alt={story.title} className="w-full h-40 object-cover rounded-md mb-4" />
+        <LazyLoad >
+          <img src={story.image} alt={story.title} className="w-full h-40 object-cover rounded-md mb-4" />
+      </LazyLoad>
+      
       <h3 className="text-lg font-semibold">{story.title}</h3>
       <p className="text-sm text-secondary">By {story.author}</p>
       <p className="text-sm">Category: {story.category}</p>
