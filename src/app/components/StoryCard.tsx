@@ -159,7 +159,7 @@ export default function StoryCard({
 
       {story.status === "favorite" && (
         <button
-          onClick={(e) => {
+          onClick={() => {
             handleNavigate();
           }}
           className="relative left-1/3 inline-flex items-center px-8 py-3 overflow-hidden text-white bg-gradient-to-r from-blue-600 to-green-500 rounded-md group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
