@@ -157,15 +157,15 @@ export default function StoryCard({
         </div>
       )}
 
-      {story.status === "favorite" && (
+      {(story.status === "favorite"  || story.status === "in-progress")&& (
         <button
           onClick={() => {
             handleNavigate();
           }}
-          className="relative left-1/3 inline-flex items-center px-8 py-3 overflow-hidden text-white bg-gradient-to-r from-blue-600 to-green-500 rounded-md group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          className="relative left-1/3 mt-2  inline-flex items-center px-8 ml-2 py-3 overflow-hidden text-white bg-gradient-to-r from-blue-600 to-green-500 rounded-md group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         >
           <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-500 transform translate-x-full bg-white opacity-10 rotate-12 group-hover:-translate-x-8"></span>
-          <span className="relative font-medium">Go to story</span>
+          <span className="relative font-medium">{story.status === "in-progress"?"Continue":"Go to story"}</span>
         </button>
       )}
     </motion.div>
