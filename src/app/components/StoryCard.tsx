@@ -69,7 +69,7 @@ export default function StoryCard({
       </LazyLoad>
 
       <h3 className="text-lg font-semibold">{story.title}</h3>
-      <p className="text-sm text-secondary">By {story.author}</p>
+      <p className="text-sm text-gray-600">By {story.author}</p>
       <p className="text-sm">Category: {story.category}</p>
 
       <div className="flex items-center mt-2">
